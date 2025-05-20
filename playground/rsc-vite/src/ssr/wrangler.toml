@@ -1,6 +1,8 @@
 name = "ssr"
 main = "./entry.ssr.tsx"
-compatibility_date = "2024-09-23"
+compatibility_date = "2025-05-10"
 compatibility_flags = ["nodejs_compat"]
 assets = { binding = "ASSETS" }
 services = [{ binding = "SERVER", service = "server" }]
+workers_dev = false
+route = { pattern = "playground-rsc.hash.memorial", custom_domain = true }

@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "start": "node server.js"
+    "start": "node server.js",
+    "deploy": "wrangler deploy -c dist/server/wrangler.json && wrangler deploy -c dist/ssr/wrangler.json"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@cloudflare/vite-plugin": "0.1.7",
+    "@cloudflare/vite-plugin": "1.2.3",
     "@cloudflare/workers-types": "^4.20250224.0",
     "@jacob-ebey/vite-react-server-dom": "0.0.12",
     "@types/express": "^5.0.0",
@@ -18,7 +19,7 @@
     "@types/react-dom": "^19.0.3",
     "vite": "^6.2.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "wrangler": "^3.111.0"
+    "wrangler": "^4.16.0"
   },
   "dependencies": {
     "@jacob-ebey/react-server-dom-vite": "19.0.0-experimental.14",

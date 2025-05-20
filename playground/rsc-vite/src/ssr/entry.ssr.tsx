@@ -46,13 +46,17 @@ export default {
         hydrate: true,
         nonce,
       });
-      z.headers.set(
-        "content-security-policy",
-        `default-src 'self'; style-src-attr 'self' 'unsafe-inline'; script-src 'self'; script-src-elem 'self' 'nonce-${nonce}'; img-src 'self' data:` +
-        (import.meta.env.DEV
-          ? "; style-src-elem 'unsafe-inline'"
-          : "; connect-src 'self' https://cloudflareinsights.com/"),
-      );
+      // If z is a response from rsc, setting the headers causes error
+      try {
+        z.headers.set(
+          "content-security-policy",
+          `default-src 'self'; style-src-attr 'self' 'unsafe-inline'; script-src 'self'; script-src-elem 'self' 'nonce-${nonce}'; img-src 'self' data:` +
+          (import.meta.env.DEV
+            ? "; style-src-elem 'unsafe-inline'"
+            : "; connect-src 'self' https://cloudflareinsights.com/"),
+        );
+      }
+      catch (e) { }
       return z;
     } catch (reason) {
       console.error(reason);

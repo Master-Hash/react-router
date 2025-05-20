@@ -12,6 +12,7 @@ export async function routeRSCServerRequest({
   decode,
   renderHTML,
   hydrate = true,
+  nonce,
 }: {
   request: Request;
   callServer: (request: Request) => Promise<Response>;
@@ -20,6 +21,7 @@ export async function routeRSCServerRequest({
     getPayload: () => Promise<ServerPayload>
   ) => ReadableStream<Uint8Array> | Promise<ReadableStream<Uint8Array>>;
   hydrate?: boolean;
+  nonce?: string;
 }) {
   const url = new URL(request.url);
   const isDataRequest = isReactServerRequest(url);
@@ -71,7 +73,9 @@ export async function routeRSCServerRequest({
       throw new Error("Failed to clone server response");
     }
 
-    const body = html.pipeThrough(injectRSCPayload(serverResponseB.body));
+    const body = html.pipeThrough(injectRSCPayload(serverResponseB.body, {
+      nonce,
+    }));
     return new Response(body, {
       status: serverResponse.status,
       headers,
@@ -90,8 +94,10 @@ export async function routeRSCServerRequest({
 
 export function RSCStaticRouter({
   getPayload,
+  nonce,
 }: {
   getPayload: () => Promise<ServerPayload>;
+  nonce?: string;
 }) {
   // @ts-expect-error - need to update the React types
   const payload = React.use(getPayload()) as ServerPayload;
@@ -186,7 +192,7 @@ export function RSCStaticRouter({
           context={context}
           router={router}
           hydrate={false}
-          nonce={payload.nonce}
+          nonce={nonce}
         />
       </FrameworkContext.Provider>
     </RSCRouterContext.Provider>

@@ -1,10 +1,12 @@
 "use client";
-
+import { use } from "react";
 import {
   useRouteError,
   useNavigation,
   isRouteErrorResponse,
+  ScrollRestoration,
 } from "react-router";
+import { NonceContext } from "../../nonce.client.tsx";
 
 export function ErrorReporter() {
   const error = useRouteError();
@@ -45,6 +47,11 @@ export function ErrorBoundary() {
   );
 }
 
-export function shouldRevalidate({ nextUrl }: { nextUrl: URL }) {
+export function shouldRevalidate({ nextUrl }: { nextUrl: URL; }) {
   return !nextUrl.pathname.endsWith("/about");
+}
+
+export function WrappedScrollRestoration() {
+  const nonce = use(NonceContext);
+  return <ScrollRestoration nonce={nonce} />;
 }

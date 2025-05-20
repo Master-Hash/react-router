@@ -2,7 +2,7 @@ import { Link, Links, Outlet, ScrollRestoration } from "react-router";
 import { type unstable_MiddlewareFunction } from "react-router";
 
 import { Counter } from "../../counter";
-import { ErrorReporter, NavigationState } from "./root.client";
+import { ErrorReporter, NavigationState, WrappedScrollRestoration } from "./root.client";
 import "./root.css";
 
 export { shouldRevalidate } from "./root.client";
@@ -56,7 +56,7 @@ export function ErrorBoundary() {
   );
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: React.ReactNode; }) {
   return (
     <html lang="en">
       <head>
@@ -83,7 +83,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <Counter />
           {children}
         </div>
-        <ScrollRestoration />
+        <WrappedScrollRestoration />
       </body>
     </html>
   );

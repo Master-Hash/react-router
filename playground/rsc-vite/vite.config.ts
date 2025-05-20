@@ -7,7 +7,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   resolve: {
-    external: ["cloudflare:workers"],
+    // external: ["cloudflare:workers"],
   },
   environments: {
     client: {

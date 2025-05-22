@@ -4,6 +4,7 @@ import { defineConfig, type Options } from "tsup";
 import { createBanner } from "../../build.utils.js";
 
 import pkg from "./package.json";
+import { ReactCompilerEsbuildPlugin } from "./complierplugin.js";
 
 const entry = ["rsc-export.ts"];
 const external = ["react-router"];
@@ -17,6 +18,13 @@ const config = (enableDevWarnings: boolean) =>
       format: ["cjs"],
       outDir: enableDevWarnings ? "dist/development" : "dist/production",
       dts: true,
+      esbuildPlugins: [
+        ReactCompilerEsbuildPlugin({
+          filter: /\.(?:[jt]sx?)$/,
+          sourceMaps: false,
+          runtimeModulePath: "fuck",
+        })
+      ],
       banner: {
         js: createBanner(pkg.name, pkg.version),
       },
@@ -34,6 +42,13 @@ const config = (enableDevWarnings: boolean) =>
       format: ["esm"],
       outDir: enableDevWarnings ? "dist/development" : "dist/production",
       dts: true,
+      esbuildPlugins: [
+        ReactCompilerEsbuildPlugin({
+          filter: /\.(?:[jt]sx?)$/,
+          sourceMaps: false,
+          runtimeModulePath: "fuck",
+        })
+      ],
       banner: {
         js: createBanner(pkg.name, pkg.version),
       },

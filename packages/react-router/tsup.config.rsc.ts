@@ -4,6 +4,7 @@ import { defineConfig, type Options } from "tsup";
 import { createBanner } from "../../build.utils.js";
 
 import pkg from "./package.json";
+import { ReactCompilerEsbuildPlugin } from "./complierplugin.js";
 
 const entry = ["index-react-server.ts"];
 const external = ["react-router", "react-router/internal/react-server-client"];
@@ -19,6 +20,13 @@ const config = (enableDevWarnings: boolean) =>
       splitting: true,
       outDir: enableDevWarnings ? "dist/development" : "dist/production",
       dts: true,
+      esbuildPlugins: [
+        ReactCompilerEsbuildPlugin({
+          filter: /\.(?:[jt]sx?)$/,
+          sourceMaps: false,
+          runtimeModulePath: "fuck",
+        })
+      ],
       banner: {
         js: createBanner(pkg.name, pkg.version),
       },
@@ -38,6 +46,13 @@ const config = (enableDevWarnings: boolean) =>
       splitting: true,
       outDir: enableDevWarnings ? "dist/development" : "dist/production",
       dts: true,
+      esbuildPlugins: [
+        ReactCompilerEsbuildPlugin({
+          filter: /\.(?:[jt]sx?)$/,
+          sourceMaps: false,
+          runtimeModulePath: "fuck",
+        })
+      ],
       banner: {
         js: createBanner(pkg.name, pkg.version),
       },

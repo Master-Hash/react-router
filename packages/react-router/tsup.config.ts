@@ -2,6 +2,7 @@ import { defineConfig } from "tsup";
 
 // @ts-ignore - out of scope
 import { createBanner } from "../../build.utils.js";
+import { ReactCompilerEsbuildPlugin } from "./complierplugin.js";
 
 import pkg from "./package.json";
 
@@ -23,6 +24,14 @@ const config = (enableDevWarnings: boolean) =>
       external: ["react-router"],
       outDir: enableDevWarnings ? "dist/development" : "dist/production",
       dts: true,
+      // treeshake: true,
+      esbuildPlugins: [
+        ReactCompilerEsbuildPlugin({
+          filter: /\.(?:[jt]sx?)$/,
+          sourceMaps: false,
+          runtimeModulePath: "fuck",
+        })
+      ],
       banner: {
         js: createBanner(pkg.name, pkg.version),
       },
@@ -43,6 +52,14 @@ const config = (enableDevWarnings: boolean) =>
       // some chunk creation that we didn't want to risk having any side effects
       outDir: enableDevWarnings ? "dist/development" : "dist/production",
       dts: true,
+      // treeshake: true,
+      esbuildPlugins: [
+        ReactCompilerEsbuildPlugin({
+          filter: /\.(?:[jt]sx?)$/,
+          sourceMaps: false,
+          runtimeModulePath: "fuck",
+        })
+      ],
       banner: {
         js: createBanner(pkg.name, pkg.version),
       },

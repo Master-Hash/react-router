@@ -123,8 +123,8 @@
     }
   },
   "dependencies": {
-    "cookie": "^1.0.1",
-    "set-cookie-parser": "^2.6.0"
+    "cookie": "^1.0.2",
+    "set-cookie-parser": "^2.7.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
@@ -135,11 +135,13 @@
     "premove": "^4.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "esbuild": "^0.25.5",
+    "quick-lru": "^7.0.1",
     "react-test-renderer": "^19.1.0",
-    "tsup": "^8.3.0",
+    "tsup": "^8.5.0",
     "typescript": "^5.1.6",
     "undici": "^6.19.2",
-    "wireit": "0.14.9"
+    "wireit": "0.14.12"
   },
   "peerDependencies": {
     "react": ">=18",

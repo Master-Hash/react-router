@@ -13,6 +13,7 @@ export async function routeRSCServerRequest({
   renderHTML,
   hydrate = true,
   nonce,
+  entryHeaders
 }: {
   request: Request;
   callServer: (request: Request) => Promise<Response>;
@@ -22,6 +23,7 @@ export async function routeRSCServerRequest({
   ) => ReadableStream<Uint8Array> | Promise<ReadableStream<Uint8Array>>;
   hydrate?: boolean;
   nonce?: string;
+  entryHeaders?: HeadersInit;
 }) {
   const url = new URL(request.url);
   const isDataRequest = isReactServerRequest(url);
@@ -61,6 +63,13 @@ export async function routeRSCServerRequest({
 
     const headers = new Headers(serverResponse.headers);
     headers.set("Content-Type", "text/html");
+    // merge entryHeaders and headers
+    if (entryHeaders) {
+      const h = new Headers(entryHeaders);
+      h.forEach((value, key) => {
+        headers.set(key, value);
+      });
+    }
 
     if (!hydrate) {
       return new Response(html, {
